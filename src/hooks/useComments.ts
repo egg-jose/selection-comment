@@ -12,13 +12,21 @@ function useComments() {
       const previous = sortedArray[i - 1];
       const current = sortedArray[i];
 
+      // console.log("currentId: " + current.id);
+      // console.log("currentBeforeTop: " + current.top );
+      // console.log("currentBeforeOriginTop: " + current.originTop);
+      // console.log("currentBeforeHeight: " + current.height);
+
       // Check for overlap
       if (previous.top + previous.height + 30 > current.top) {
         // Adjust the positionTop to avoid overlap
         current.top = previous.top + previous.height + 30;
       }
+      // console.log("currentAfterTop: " + current.top);
+      // console.log("currentAfterOriginTop: " + current.originTop);
+      // console.log("currentAfterHeight: " + current.height);
+      // console.log("---------------------------------------------------")
     }
-
     return sortedArray;
   }
 
@@ -27,6 +35,7 @@ function useComments() {
       id: Math.random().toString(36).substring(2, 15),
       text,
       top,
+      originTop: top,
       height,
     } as CommentItem;
     setComments((prevComments) => {
@@ -35,24 +44,22 @@ function useComments() {
     });
   };
 
-  const handleModifyComment = (
-    id: string,
-    text: string,
-    top: number,
-    height = 125
-  ) => {
+  const handleModifyComment = (id: string, text: string, height = 125) => {
     setComments((prevComments) => {
-      const nextComments = [...prevComments];
-      const index = nextComments.findIndex((comment) => comment.id === id);
-      nextComments[index].text = text;
-      nextComments[index].top = top;
-      nextComments[index].height = height;
+      const nextComments = [...prevComments].map((c) => {
+        c.top = c.originTop;
+        if (c.id === id) {
+          c.text = text;
+          c.height = height;
+        }
+        return c;
+      });
       const newComments = adjustPositions(nextComments);
       return newComments;
     });
   };
 
-  return [comments, handleAddComment, handleModifyComment] as const
+  return [comments, handleAddComment, handleModifyComment] as const;
 }
 
 export default useComments;

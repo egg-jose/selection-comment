@@ -4,12 +4,7 @@ import { CommentItem } from "./ComentItemType";
 
 interface Props {
   comment: CommentItem;
-  handleModifyComment: (
-    id: string,
-    text: string,
-    top: number,
-    height?: number
-  ) => void;
+  handleModifyComment: (id: string, text: string, height?: number) => void;
 }
 
 function Comment({ comment, handleModifyComment }: Props) {
@@ -27,7 +22,7 @@ function Comment({ comment, handleModifyComment }: Props) {
   const handleShowToggle = () => {
     let nextHeight = 125;
     if (!show) nextHeight = ref?.current ? ref.current.scrollHeight + 50 : 125;
-    handleModifyComment(comment.id, comment.text, comment.top, nextHeight);
+    handleModifyComment(comment.id, comment.text, nextHeight);
     toggleShow();
   };
 

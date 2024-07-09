@@ -6,7 +6,6 @@ interface Props {
   handleModifyComment: (
     id: string,
     text: string,
-    top: number,
     height?: number
   ) => void;
 }
