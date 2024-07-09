@@ -3,12 +3,13 @@ import { MessageCirclePlus } from "lucide-react";
 
 interface Props {
   handleAddComment: (comment: string) => void;
+  elementRef: React.RefObject<HTMLDivElement>;
 }
 
-function SelectMenu({ handleAddComment }: Props) {
+function SelectMenu({ handleAddComment, elementRef }: Props) {
   const width = 100;
   const height = 30;
-  const [selection, position, state] = useSelectionChange(width, height);
+  const [selection, position, state] = useSelectionChange(width, height, elementRef);
 
   return (
     <div role="dialog" aria-labelledby="Add comment" aria-haspopup="dialog">

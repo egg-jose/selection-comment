@@ -7,7 +7,11 @@ interface positionType {
   height: number;
 }
 
-function useSelectionChange(width: number, height: number) {
+function useSelectionChange(
+  width: number,
+  height: number,
+  elementRef: React.RefObject<HTMLDivElement>
+) {
   const [state, setState] = React.useState<string>("ready");
   const [selection, setSelection] = React.useState<string | null>("");
   const [position, setPosition] = React.useState({} as positionType);
@@ -22,13 +26,15 @@ function useSelectionChange(width: number, height: number) {
       if (!activeSelection) return;
 
       const text = activeSelection.toString();
-      if (!text) {
+      const range = activeSelection.getRangeAt(0);
+      const commonAncestor = range.commonAncestorContainer;
+      if (!text || !elementRef?.current?.contains(commonAncestor)) {
         setState("ready");
         setSelection(null);
         return;
       }
 
-      const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
+      const rect = range.getBoundingClientRect();
 
       setSelection(text);
       setPosition({
@@ -46,7 +52,7 @@ function useSelectionChange(width: number, height: number) {
       document.removeEventListener("selectstart", handleSelectStart);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [width, height]);
+  }, [width, height, elementRef]);
 
   return [selection, position, state] as const;
 }

@@ -1,11 +1,13 @@
+import React from "react";
+
 interface Props {
   children: React.ReactNode;
 }
 
-function Article({ children }: Props) {
+const Article = React.forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
   return (
     <>
-      <div style={{ width: "60%" }}>
+      <div style={{ width: "60%" }} ref={ref}>
         {children}
         <h1>
           The Evolution of JavaScript: From Browser Scripting to Full-Stack
@@ -90,6 +92,6 @@ function Article({ children }: Props) {
       </div>
     </>
   );
-}
+});
 
 export default Article;
