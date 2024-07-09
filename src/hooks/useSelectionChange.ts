@@ -17,7 +17,7 @@ function useSelectionChange(width: number, height: number) {
       setState("selecting");
       setSelection(null);
     };
-    const handleSelectionChange = () => {
+    const handleMouseUp = () => {
       const activeSelection = document.getSelection();
       if (!activeSelection) return;
 
@@ -40,15 +40,15 @@ function useSelectionChange(width: number, height: number) {
       setState("selected");
     };
     document.addEventListener("selectstart", handleSelectStart);
-    document.addEventListener("mouseup", handleSelectionChange);
+    document.addEventListener("mouseup", handleMouseUp);
 
     return () => {
       document.removeEventListener("selectstart", handleSelectStart);
-      document.removeEventListener("mouseup", handleSelectionChange);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [width, height]);
 
-  return [selection, position] as const;
+  return [selection, position, state] as const;
 }
 
 export default useSelectionChange;
