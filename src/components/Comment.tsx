@@ -4,9 +4,15 @@ import { CommentItem } from "./ComentItemType";
 
 interface Props {
   comment: CommentItem;
+  handleModifyComment: (
+    id: string,
+    text: string,
+    top: number,
+    height?: number
+  ) => void;
 }
 
-function Comment({ comment }: Props) {
+function Comment({ comment, handleModifyComment }: Props) {
   const [show, toggleShow] = useToggle();
   const [isTooLong, setIsTooLong] = React.useState(false);
 
@@ -17,6 +23,13 @@ function Comment({ comment }: Props) {
       setIsTooLong(ref.current.clientHeight !== ref.current.scrollHeight);
     }
   }, []);
+
+  const handleShowToggle = () => {
+    let nextHeight = 125;
+    if (!show) nextHeight = ref?.current ? ref.current.scrollHeight + 50 : 125;
+    handleModifyComment(comment.id, comment.text, comment.top, nextHeight);
+    toggleShow();
+  };
 
   return (
     <div
@@ -30,7 +43,7 @@ function Comment({ comment }: Props) {
         {comment.text}
       </h5>
       {isTooLong && (
-        <a className="hover:cursor-pointer" onClick={toggleShow}>
+        <a className="hover:cursor-pointer" onClick={handleShowToggle}>
           {show ? "show less" : "show more"}
         </a>
       )}
