@@ -6,7 +6,7 @@ interface Props {
 
 function CommentsSection({ comments }: Props) {
   return (
-    <div style={{ width: "30%", padding:"0 10px" }}>
+    <div className="relative px-3 w-1/3">
       {comments.map((comment, index) => (
         <Comment comment={comment} key={index} />
       ))}

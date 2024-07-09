@@ -7,7 +7,7 @@ interface Props {
 const Article = React.forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
   return (
     <>
-      <div style={{ width: "60%" }} ref={ref}>
+      <div className="w-2/3" ref={ref}>
         {children}
         <h1>
           The Evolution of JavaScript: From Browser Scripting to Full-Stack
