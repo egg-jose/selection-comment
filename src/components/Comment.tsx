@@ -1,8 +1,9 @@
 import React from "react";
 import useToggle from "../hooks/useToggle";
+import { CommentItem } from "./ComentItemType";
 
 interface Props {
-  comment: string;
+  comment: CommentItem;
 }
 
 function Comment({ comment }: Props) {
@@ -18,12 +19,15 @@ function Comment({ comment }: Props) {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg mb-3 ease-in-out duration-300">
+    <div
+      className="absolute  bg-white p-3 rounded-lg shadow-lg mb-3 transition duration-150 ease-in-out"
+      style={{ left: "25px", top: comment.top, height: comment.height }}
+    >
       <h5
         ref={ref}
-        className={`font-bold mb-2 text-gray-800 ${!show && "line-clamp-4"} `}
+        className={`font-bold mb-2 text-gray-800 ${!show && "line-clamp-3"} `}
       >
-        {comment}
+        {comment.text}
       </h5>
       {isTooLong && (
         <a className="hover:cursor-pointer" onClick={toggleShow}>

@@ -1,7 +1,8 @@
+import { CommentItem } from "./ComentItemType";
 import Comment from "./Comment";
 
 interface Props {
-  comments: string[];
+  comments: CommentItem[];
 }
 
 function CommentsSection({ comments }: Props) {

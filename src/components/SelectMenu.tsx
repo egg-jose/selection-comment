@@ -2,14 +2,18 @@ import useSelectionChange from "../hooks/useSelectionChange";
 import { MessageCirclePlus } from "lucide-react";
 
 interface Props {
-  handleAddComment: (comment: string) => void;
+  handleAddComment: (text: string, top: number, height?: number) => void;
   elementRef: React.RefObject<HTMLDivElement>;
 }
 
 function SelectMenu({ handleAddComment, elementRef }: Props) {
   const width = 100;
   const height = 30;
-  const [selection, position, state] = useSelectionChange(width, height, elementRef);
+  const [selection, position, state] = useSelectionChange(
+    width,
+    height,
+    elementRef
+  );
 
   return (
     <div role="dialog" aria-labelledby="Add comment" aria-haspopup="dialog">
@@ -22,7 +26,7 @@ function SelectMenu({ handleAddComment, elementRef }: Props) {
         >
           <button
             className="flex w-full h-full justify-between items-center px-2 bg-transparent"
-            onClick={() => handleAddComment(selection)}
+            onClick={() => handleAddComment(selection, position.y)}
           >
             <span id="add comment" className="text-xs">
               Comment
